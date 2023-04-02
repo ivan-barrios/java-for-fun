@@ -1,8 +1,0 @@
-package figuras;
-
-public class Cuadrado extends Rectangulo {
-	public Cuadrado() {super();}
-	public Cuadrado(double lado) {
-		super(lado, lado);
-	}
-}

@@ -1,9 +1,0 @@
-/**
- * 
- */
-/**
- * @author ivanb
- *
- */
-module Animales {
-}
