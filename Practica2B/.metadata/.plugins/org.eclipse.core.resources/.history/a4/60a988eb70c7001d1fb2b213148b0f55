@@ -1,0 +1,13 @@
+
+public class Tablet {
+	private int pulgadas;
+
+	public double getPulgadas() {
+		return pulgadas;
+	}
+
+	public void setPulgadas(int pulgadas) {
+		this.pulgadas = pulgadas;
+	}
+	
+}

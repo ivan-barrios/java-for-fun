@@ -1,0 +1,30 @@
+package src;
+
+
+public class SmartPhone extends Mobile {
+	private int numero;
+	
+	
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	
+	public boolean equals(Object o) {
+		boolean result = false;
+		if ((o != null) && (o instanceof SmartPhone)) {
+			SmartPhone sp = (SmartPhone)o;
+			if (sp.getNumero() == this.getNumero()) result = true;
+		}
+		return result;
+	}
+	
+	public String toString() {
+		return super.getMarca() + super.getSistemaOperativo() + super.getModelo() + super.getCosto() + this.getNumero();
+	}
+	
+}

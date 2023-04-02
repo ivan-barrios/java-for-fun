@@ -1,0 +1,12 @@
+package ejercicio3;
+
+public class TestTablet {
+
+	public static void main(String[] args) {
+		Tablet[] tabletArr = new Tablet[3];
+		
+		
+
+	}
+
+}

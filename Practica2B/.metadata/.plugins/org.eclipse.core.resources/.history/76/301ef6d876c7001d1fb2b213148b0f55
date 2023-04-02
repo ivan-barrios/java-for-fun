@@ -1,0 +1,20 @@
+package src;
+
+
+public class Tablet extends Mobile {
+	private int pulgadas;
+	
+
+	public Tablet() {
+		super();
+	}
+
+	public int getPulgadas() {
+		return pulgadas;
+	}
+
+	public void setPulgadas(int pulgadas) {
+		this.pulgadas = pulgadas;
+	}
+	
+}

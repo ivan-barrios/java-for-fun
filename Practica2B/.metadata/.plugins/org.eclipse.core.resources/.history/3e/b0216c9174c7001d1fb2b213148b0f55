@@ -1,0 +1,26 @@
+package src;
+
+
+public class SmartPhone extends Mobile {
+	private int numero;
+	
+
+	public SmartPhone() {
+		super();
+	}
+	
+
+	public int getNumero() {
+		return numero;
+	}
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+	
+	public boolean equals() {
+		//??????
+	}
+	
+	
+}

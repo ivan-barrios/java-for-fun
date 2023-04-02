@@ -1,0 +1,15 @@
+package ;
+
+public class Mobile {
+	
+	private String marca;
+	private String sistemaOperativo;
+	private String modelo;
+	private int costo;
+	
+	
+	
+	
+	
+	
+}

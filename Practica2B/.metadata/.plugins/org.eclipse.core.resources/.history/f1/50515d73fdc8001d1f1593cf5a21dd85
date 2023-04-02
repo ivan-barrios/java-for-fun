@@ -1,0 +1,20 @@
+package src;
+
+public class EjercicioTestSobreescritura {
+
+	public static void main(String[] args) {
+		
+		Tablet sp1 = new Tablet();
+		Tablet sp2 = new Tablet();
+		
+		sp1.setPulgadas(9);
+		sp1.setMarca("Apple");
+		sp2.setPulgadas(9);
+		sp2.setMarca("Apple");
+		
+		boolean eq = sp1.equals(sp2);
+		
+		System.out.println(eq);
+	}
+
+}

@@ -1,0 +1,6 @@
+package prog3.util;
+import prog3.listagenerica.*;
+
+public class Pila<T> {
+	ListaGenerica<T> datos;
+}

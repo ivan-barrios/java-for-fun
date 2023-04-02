@@ -1,0 +1,10 @@
+package prog3.listagenerica;
+
+public class TestListaGenerica {
+
+	public static void main(String[] args) {
+		// TODO Auto-generated method stub
+
+	}
+
+}

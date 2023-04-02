@@ -1,0 +1,28 @@
+package prog3.util;
+import prog3.listagenerica.*;
+
+public class Pila<T> {
+	ListaGenerica<T> datos;
+	
+	public Pila() {
+	}
+	
+	public void apilar(T elem) {
+		this.datos.comenzar();
+		this.datos.agregarInicio(elem);
+	}
+	
+	public T desapilar() {
+		T dato = this.datos.elemento(0);
+		this.datos.eliminarEn(0);
+		return dato;
+	}
+	
+	public T tope() {
+		return this.datos.elemento(0);
+	}
+	
+	public boolean esVacia() {
+		return this.datos.esVacia();
+	}
+}

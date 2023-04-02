@@ -1,0 +1,20 @@
+package src;
+
+public class EjercicioTestSobreescritura {
+
+	public static void main(String[] args) {
+		
+		SmartPhone sp1 = new SmartPhone();
+		SmartPhone sp2 = new SmartPhone();
+		
+		sp1.setNumero(9);
+		sp1.setMarca("Apple");
+		sp2.setNumero(9);
+		
+		
+		boolean eq = sp1.equals(sp2);
+		
+		System.out.println(eq);
+	}
+
+}
