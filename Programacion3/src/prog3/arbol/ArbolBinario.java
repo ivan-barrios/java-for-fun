@@ -91,17 +91,35 @@ public class ArbolBinario<T> {
 	
 	// imprime el arbol en preorden  
 	public void printPreorden() {
-		
+		System.out.println(this.dato);
+		if (this.tieneHijoIzquierdo()) {
+			this.getHijoIzquierdo().printPreorden();
+		}
+		if (this.tieneHijoDerecho()) {
+			this.getHijoDerecho().printPreorden();
+		}
 	}
 
 	// imprime el arbol en postorden
 	public void printInorden() {
-		
+		if (this.tieneHijoIzquierdo()) {
+			this.getHijoIzquierdo().printInorden();
+		}
+		System.out.println(this.dato);
+		if (this.tieneHijoDerecho()) {
+			this.getHijoDerecho().printInorden();
+		}
 	}
 	
 	// imprime el arbol en postorden
 	public void printPostorden() {
-		
+		if(this.tieneHijoIzquierdo()) {
+			this.getHijoIzquierdo().printPostorden();
+		}
+		if (this.tieneHijoDerecho()) {
+			this.getHijoDerecho().printPostorden();
+		}
+		System.out.println(this.dato);
 	}
 
 
@@ -121,7 +139,23 @@ public class ArbolBinario<T> {
 	
 	
 	public int contarHojas() {
-		return 0;
+		int contador = 0;
+		contador = this.contarHojasRecursivo();
+		return contador;
+	}
+	private int contarHojasRecursivo() {
+		int contador = 0;
+		if (!(this.tieneHijoIzquierdo() && this.tieneHijoDerecho())) {
+			return 1;
+		}
+		
+		if (this.tieneHijoIzquierdo()) {
+			contador = this.getHijoIzquierdo().contarHojasRecursivo();
+		}
+		if (this.tieneHijoDerecho()) {
+			contador += this.getHijoDerecho().contarHojasRecursivo();
+		}
+		return contador;
 	}
 
 	
