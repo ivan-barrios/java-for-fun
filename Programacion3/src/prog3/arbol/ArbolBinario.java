@@ -131,8 +131,19 @@ public class ArbolBinario<T> {
 
 	public ListaGenerica<T> frontera() {
 		ListaGenerica<T> l = new ListaGenericaEnlazada<T>();
-
+		this.fronteraRecursive(l);
 		return l;
+	}
+	public void fronteraRecursive(ListaGenerica<T> l){
+		if (!(this.tieneHijoIzquierdo() && this.tieneHijoDerecho())) {
+			l.agregarFinal(this.dato);
+		}
+		if (this.tieneHijoIzquierdo()) {
+			this.fronteraRecursive(l);
+		}
+		if (this.tieneHijoDerecho()) {
+			this.fronteraRecursive(l);
+		}
 	}
 
 	
