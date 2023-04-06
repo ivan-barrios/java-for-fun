@@ -10,17 +10,17 @@ public class Pila<T> {
 	}
 	
 	public void apilar(T elem) {
-		this.datos.agregarInicio(elem);
+		this.datos.agregarFinal(elem);
 	}
 	
 	public T desapilar() {
-		T dato = this.datos.elemento(0);
-		this.datos.eliminarEn(0);
+		T dato = this.datos.elemento(this.datos.tamanio());
+		this.datos.eliminarEn(this.datos.tamanio() - 1);
 		return dato;
 	}
 	
 	public T tope() {
-		return this.datos.elemento(0);
+		return this.datos.elemento(this.datos.tamanio() - 1);
 	}
 	
 	public boolean esVacia() {

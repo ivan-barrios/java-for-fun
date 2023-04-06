@@ -8,8 +8,6 @@ public class PilaTest {
 		pila.apilar('b');
 		pila.apilar('c');
 		pila.apilar('d');
-		pila.apilar('e');
-		pila.desapilar();
 		pila.desapilar();
 		pila.desapilar();
 		pila.desapilar();
