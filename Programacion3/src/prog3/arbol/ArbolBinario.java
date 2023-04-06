@@ -1,6 +1,7 @@
 package prog3.arbol;
 
 import prog3.listagenerica.*;
+import prog3.util.*;
 
 public class ArbolBinario<T> {
 	private T dato;
@@ -79,13 +80,45 @@ public class ArbolBinario<T> {
 	}
 
 	
-
+	//Hecho mirando el powerpoint
 	public boolean esLleno() {
-		return false;
+		//Inicializo todo para poder entrar al while
+		ArbolBinario<T> arbol = null;  //Arbol que va a ir metiendo subarboles a la cola
+		Cola<ArbolBinario<T>> cola = new Cola<ArbolBinario<T>>();  //La cola
+		boolean lleno = true;  //Variable para verificar si es lleno o no
+		cola.encolar(this);    //Encolo Raiz
+		int cantNodos = 0;	   //Cantidad de nodos en nivel
+		cola.encolar(null);    //Porque es el primer nivel, ya no hay mas elementos
+		int nivel = 0;
+		while (!cola.esVacia() && lleno) {
+			arbol = cola.desencolar();    //Ararro subarbol
+			if (arbol != null) {
+				if (!arbol.getHijoIzquierdo().esVacio()) {  //Me aseguro de que 
+					cola.encolar(arbol.getHijoIzquierdo()); //el hijo no es hoja
+					cantNodos++;							
+				}								        
+				if (!arbol.getHijoDerecho().esVacio()) {	
+					cola.encolar(arbol.getHijoDerecho());
+					cantNodos++;
+				}
+			} else if (!cola.esVacia()) {             //No le falta ningun hijo?
+				if (cantNodos == Math.pow(2, ++nivel)) {  //Hasta ahora es lleno?
+					cola.encolar(null);
+					cantNodos = 0;   //Reinicio variable
+				}
+				else lleno = false;
+			}
+			return lleno;	
+		}
 	}
 
 	 boolean esCompleto() {
 		return false;
+		//Logica para solucion: Podemos crear una listaEnlazada, agregando
+		//cada hoja del arbol, y luego preguntar si alguno de los nodos en
+		//posiciones impares es null (Algun hijo izquierdo vacio) y ahi fijarnos
+		//si los siguientes nodos son null. Para que sea completo, estos
+		//ultimos nodos, deben ser null. En caso contrario, el árbol no es completo
 	}
 
 	
