@@ -107,9 +107,9 @@ public class ArbolBinario<T> {
 					cantNodos = 0;   //Reinicio variable
 				}
 				else lleno = false;
-			}
-			return lleno;	
+				}
 		}
+		return lleno;
 	}
 
 	 boolean esCompleto() {
