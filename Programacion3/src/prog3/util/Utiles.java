@@ -22,7 +22,9 @@ public class Utiles {
 		ArbolBinario<Integer> arbolitoDer3 = new ArbolBinario<Integer>(1);
 		arbolitoDer1.agregarHijoDerecho(arbolitoDer3);
 
-		System.out.println(sumaMaximaHorizontal(arbolito));
+		ListaGenericaEnlazada<Integer> l = new ListaGenericaEnlazada<Integer>();
+		l = trayectoriaPesada(arbolito);
+		System.out.println(l.toString());
 
 	}
 
@@ -58,24 +60,52 @@ public class Utiles {
 				if (a.tieneHijoDerecho()) {
 					cola.encolar(a.getHijoDerecho());
 				}
-			} else if (!cola.esVacia()) {
+			} else {
+
 				if (sumaNivel > sumaMax) {
 					sumaMax = sumaNivel;
 				}
-				cola.encolar(null); //Termina nivel
-				sumaNivel = 0; //RESET
+				sumaNivel = 0; // RESET
+				if (!cola.esVacia()) {
+					cola.encolar(null); // Termina nivel
+				}
 			}
 		}
-		if (sumaNivel > sumaMax) sumaMax = sumaNivel;
+
 		return sumaMax;
 	}
-	
-	
-	public static ListaGenericaEnlazada<Integer> trayectoriaPesada(ArbolBinario<Integer> a) {
-		
+
+	private static ListaGenericaEnlazada<Integer> trayectoriaPesada(ArbolBinario<Integer> arbol) {
+		ListaGenericaEnlazada<Integer> l = new ListaGenericaEnlazada<Integer>(); // declaro variable y la inicializo
+		int suma = 0;
+		int nivel = 0;
+		trayectoriaPesadaRecursivo(arbol, l, suma, nivel);
+		return l;
 	}
-	
-	
-	
-	
+
+	private static void trayectoriaPesadaRecursivo(ArbolBinario<Integer> arbol, ListaGenericaEnlazada<Integer> l,
+			int suma, int nivel) {
+
+		// necesito recorrer hasta que encuentre una hoja (nodo que no tiene ningun
+		// hijo)
+		if (arbol == null) {
+			return; // que vuelva
+		} else {
+			if (arbol.esHoja()) {
+				suma += (arbol.getDato() * nivel); // sumo el ultimo elemento * nivel
+
+				l.agregarFinal(suma); // agrego el valor de la suma de los nodos a la lista
+
+			} else {
+				// es un hijo
+				suma += (arbol.getDato() * nivel); // sumo el dato con el nivel en el que estoy
+				nivel++; // cada vez que sumo un elemento estoy en un nivel mas ya que sumo
+							// verticalemnete
+				trayectoriaPesadaRecursivo(arbol.getHijoIzquierdo(), l, suma, nivel);
+				trayectoriaPesadaRecursivo(arbol.getHijoDerecho(), l, suma, nivel);
+
+			}
+		}
+
+	}
 }

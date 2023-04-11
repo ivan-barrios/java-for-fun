@@ -27,7 +27,7 @@ public class Adivinanza {
 		arbolBinarioA.agregarHijoDerecho(hijoDerecho);
 		
 		ListaGenericaEnlazada<String> l = new ListaGenericaEnlazada<String>();
-		l = secuenciaConMasPreguntas(arbolBinarioA);
+		l = secuenciaConMasPreguntasV2(arbolBinarioA);
 		System.out.println(l.toString());
 
 	}
@@ -60,9 +60,9 @@ public class Adivinanza {
 	
 	
 	
-	public static ListaGenericaEnlazada<String>[] secuenciaConMasPreguntasV2(ArbolBinario<String> a) {
+	public static ListaGenericaEnlazada<String> secuenciaConMasPreguntasV2(ArbolBinario<String> a) {
 
-		ListaGenericaEnlazada<String> [] l = new ListaGenericaEnlazada[2];
+		ListaGenericaEnlazada<String> l = new ListaGenericaEnlazada<String>();
 		ListaGenericaEnlazada<String> listaIzq = new ListaGenericaEnlazada<String>();
 		ListaGenericaEnlazada<String> listaDer = new ListaGenericaEnlazada<String>();
 
@@ -79,7 +79,8 @@ public class Adivinanza {
 				listaDer.agregarInicio(a.getDato());
 				return listaDer;
 			} else {
-				// Retorno alguna de las dos
+				// Retorno las dos
+				listaIzq.agregarInicio(a.getDato());
 				listaIzq.agregarInicio(a.getDato());
 				return listaIzq;
 			}
