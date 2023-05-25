@@ -1,0 +1,12 @@
+package prog3.util;
+
+public class PilaTest {
+
+	public static void main(String[] args) {
+		String myString = "{()[()]}";
+		
+		
+		Pila<Character> pila = new Pila<Character>();
+	}
+
+}

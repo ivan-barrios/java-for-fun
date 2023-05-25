@@ -1,0 +1,14 @@
+package prog3.util;
+import prog3.listagenerica.*;
+
+public class Pila<T> {
+	ListaGenerica<T> datos;
+	
+	public void apilar(T elem) {
+		this.datos.agregarInicio(elem);
+	}
+	
+	public T desapilar() {
+		
+	}
+}

@@ -1,0 +1,14 @@
+package prog3.util;
+
+public class TestBalanceo {
+
+	public static void main(String[] args) {
+		String myString = "{()[()]}";
+		System.out.println(verificarArmonia(myString));
+	}
+
+	public boolean verificarArmonia(String myString) {
+		Pila<Character> pila = new Pila<Character>();
+	}
+
+}

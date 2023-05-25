@@ -1,0 +1,7 @@
+package figuras;
+
+public class TestDeFigurasGeometricas {
+	public static void main(String[] args) {
+		Figura[] arregloFiguras = new Figura[3];
+	}
+}

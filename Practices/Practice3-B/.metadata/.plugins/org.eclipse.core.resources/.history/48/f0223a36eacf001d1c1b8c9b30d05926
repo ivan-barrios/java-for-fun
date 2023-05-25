@@ -1,0 +1,14 @@
+package prog3.listagenerica;
+
+public class TestListaGenerica {
+
+	public static void main(String[] args) {
+		ListaGenericaEnlazada<Integer> lista = new ListaGenericaEnlazada<Integer>();
+		lista.agregarFinal(3);
+		lista.agregarFinal(90);
+		lista.agregarFinal(2);
+		lista.agregarFinal(123);
+		lista.agregarFinal(8);
+	}
+
+}

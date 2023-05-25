@@ -1,0 +1,27 @@
+package prog3.util;
+
+public class TestBalanceo {
+
+	public static void main(String[] args) {
+		String myString = "{()[()]}";
+		System.out.println(verificarArmonia(myString));
+	}
+
+	public static boolean verificarArmonia(String myString) {
+		boolean armonico = false;
+		//Creo pila para poner los datos y verificar
+		Pila<Character> pila = new Pila<Character>();
+		for (int i = 0; i < myString.length(); i++) {
+			pila.apilar(myString.charAt(i));
+		}
+		
+		//A medida que voy desapilando, verifico
+		while (!pila.esVacia()) {
+			
+			
+		}
+		
+		return armonico;
+	}
+
+}

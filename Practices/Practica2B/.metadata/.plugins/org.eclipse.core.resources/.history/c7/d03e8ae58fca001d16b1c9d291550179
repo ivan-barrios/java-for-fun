@@ -1,0 +1,18 @@
+package figuras;
+
+public abstract class Figura {
+	private String color;
+	private boolean relleno;
+	
+	public Figura() {
+	}
+	
+	public Figura(String color, boolean relleno) {
+		this.color = color;
+		this.relleno = relleno;
+	}
+	
+	public String getColor() {
+		return color;
+	}
+}

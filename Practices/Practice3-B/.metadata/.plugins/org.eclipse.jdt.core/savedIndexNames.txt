@@ -1,0 +1,6 @@
+INDEX VERSION 1.132+C:\Users\ivanb\OneDrive\Escritorio\Facultad\3er Semestre\Programacion III\Practice3-B\.metadata\.plugins\org.eclipse.jdt.core
+1865797976.index
+2849373078.index
+1605990490.index
+3551592467.index
+2582499840.index

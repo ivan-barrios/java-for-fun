@@ -1,0 +1,20 @@
+package figuras;
+
+public class Rectangulo extends Figura {
+	private double ancho;
+	private double largo;
+	public Rectangulo() {
+		super();
+	}
+	public Rectangulo(double ancho, double largo) {
+		super();
+		this.ancho = ancho;
+		this.largo = largo;
+	}
+	public Rectangulo(String color, boolean relleno) {
+		super(color, relleno);
+		
+	}
+	
+	
+}

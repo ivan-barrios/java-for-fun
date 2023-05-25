@@ -1,0 +1,42 @@
+Respuestas teoricas a practica 7:
+
+1) a- Tanto un grafo como un árbol son estructuras de datos utilizadas en ciencias de la computación y matemáticas para representar relaciones entre elementos. Sin embargo, existen diferencias clave en su estructura y características.
+
+Un grafo es una colección de nodos (también llamados vértices) que están interconectados por aristas (también llamadas bordes). Estas aristas pueden tener direcciones o no tenerlas, lo que da lugar a los conceptos de grafo dirigido y grafo no dirigido, respectivamente. Los grafos pueden ser utilizados para representar una amplia gama de relaciones, como redes sociales, mapas de carreteras, conexiones de computadoras, entre otros. Los grafos pueden tener ciclos, lo que significa que se puede llegar a un nodo desde sí mismo siguiendo un camino en el grafo.
+
+Por otro lado, un árbol es un tipo especial de grafo no dirigido en el cual no hay ciclos. Esto significa que cada nodo en un árbol está conectado a otros nodos de manera jerárquica, formando una estructura en forma de árbol. Un árbol tiene un nodo raíz que actúa como punto de partida, y cada nodo puede tener cero o más nodos hijos, excepto el nodo raíz, que no tiene padre. Cada nodo en un árbol tiene un solo padre, lo que establece una relación padre-hijo. Los árboles se utilizan comúnmente para representar estructuras de datos como árboles de búsqueda binaria, árboles genealógicos y estructuras de directorios de archivos en un sistema operativo.
+
+En resumen, la diferencia fundamental entre un grafo y un árbol radica en la presencia de ciclos. Los grafos pueden tener ciclos y se utilizan para representar relaciones más generales, mientras que los árboles son grafos acíclicos que siguen una estructura jerárquica con un nodo raíz y relaciones padre-hijo.
+
+b- i) Grafo no dirigido
+   ii) Grafo dirigido
+   iii) 
+   iv) Grafo dirigido
+
+
+
+
+2) i. El mínimo número de aristas que puede tener un grafo no dirigido conexo con n vértices es n-1. Para que un grafo sea conexo, debe haber un camino entre cada par de vértices. Si tenemos n vértices, seleccionar un vértice como punto de partida y conectarlo con todos los demás vértices restantes requerirá n-1 aristas. Cualquier arista adicional crearía un ciclo innecesario.
+
+ii. El máximo número de aristas que puede tener un grafo no dirigido acíclico con n vértices es (n*(n-1))/2. Si el grafo es acíclico, significa que no hay ciclos, lo que implica que cada vértice debe estar conectado con todos los demás vértices excepto a sí mismo. Usando la fórmula del grafo completo, obtenemos (n*(n-1))/2 aristas. (Son n vertices de los cuales uno conecta a n-1 vertices mas (Le pueden llegar hasta n-1 aristas) y por cada par de vertices hay 1 arista (por eso el /2))
+
+iii. En general, un grafo conexo y acíclico con n vértices tiene exactamente n-1 aristas. Esto se debe a que un grafo acíclico (ARBOL), tiene una arista menos que la cantidad total de vértices.
+
+iv. Si se exige que el grafo sea completo, es decir, haya una arista entre cada par de vértices, entonces el número mínimo de aristas que puede tener es (n*(n-1))/2. Esto se deriva de la fórmula del grafo completo, donde cada par de vértices está conectado por una arista.
+
+
+
+3) a)  Se utiliza una Matriz de Adyacencias cuando el grafo es denso o se necesita acceso rápido a la existencia de una arista -->  T(|V|,|E|) = O(1). Mientras que se utiliza una Lista de Adyacencias cuando el grafo es disperso (Pocas aristas respecto de la cantidad de vertices) -->Costo espacial, sea dirigido o no: O (|V|+|E|) . O se requiere recorrer los vecinos de un vértice.
+
+b) En grafos densos el numero de aristas, vertices (depende menos que del de aristas) y si esta hecho con matriz de adyacencias o con lista de adyacencias. Para grafos dispersos en funcion de el numero de vertices?, del grado de cada vertice (Mientras mayor sea el grado de los vertices, mayor el tiempo de ejecucion) Ademas, la estructura de datos utilizada influye tambien.
+
+c) La matriz resultante seria cuadrada y simetrica, porque para cada par de vertices, tenemos que la adyacencia es bidirenccional, lo que hace que en la matriz, aparezca desde un vertice A hasta B y desde B hasta A.
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,18 @@
+package prog3.util;
+
+public class PilaTest {
+
+	public static void main(String[] args) {
+		Pila<Character> pila = new Pila<Character>();
+		pila.apilar('a');
+		pila.apilar('b');
+		pila.apilar('c');
+		pila.apilar('d');
+		pila.apilar('e');
+		pila.desapilar();
+		pila.desapilar();
+		pila.desapilar();
+		System.out.println(pila.tope());
+	}
+
+}

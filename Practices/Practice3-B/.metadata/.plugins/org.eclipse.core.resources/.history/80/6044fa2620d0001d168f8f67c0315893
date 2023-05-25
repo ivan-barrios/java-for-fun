@@ -1,0 +1,23 @@
+package prog3.util;
+
+public class TestBalanceo {
+
+	public static void main(String[] args) {
+		String myString = "{()[()]}";
+		System.out.println(verificarArmonia(myString));
+	}
+
+	public static boolean verificarArmonia(String myString) {
+		Pila<Character> pila = new Pila<Character>();
+		for (int i = 0; i < myString.length(); i++) {
+			if (myString.charAt(i) == '{' || myString.charAt(i) == '[' || myString.charAt(i) == '(') {
+				pila.apilar(myString.charAt(i));
+			} else if (myString.charAt(i) == '}' || myString.charAt(i) == ']' || myString.charAt(i) == ')') {
+				if (pila.esVacia()) return false;
+				char top = pila.desapilar();
+			}
+		}
+
+	}
+
+}
