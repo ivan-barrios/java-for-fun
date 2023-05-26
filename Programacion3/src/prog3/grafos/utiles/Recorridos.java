@@ -7,9 +7,9 @@ import prog3.util.*;
 public class Recorridos<T> {
 
 	
-	//DFS tiene un orden de ejecucion de O(V^2) (V es la cantidad de vertices)
+	//DFS tiene un orden de ejecucion de O(V + E) (V es la cantidad de vertices y E aristas)
 	//Esto es porque hay una iteracion for que se hace V veces y hay una recursion
-	//que se hace V veces tambien (Dentro del for) --> O(V^2)
+	//que se hace E veces (metodo privado, que por cada adyacente, se lo procesa --> E veces )
 	public ListaGenerica<Vertice<T>> dfs(Grafo<T> grafo) {
 		// Hago mi vector de marcas para saber si ya visite o no un vertice
 		boolean[] marca = new boolean[grafo.listaDeVertices().tamanio()];
