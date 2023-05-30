@@ -5,6 +5,10 @@ import prog3.listagenerica.*;
 
 public class Mapa {
 	Grafo<String> mapaCiudades;
+	
+	public Mapa (Grafo<String> mapaCiudades) {
+		this.mapaCiudades = mapaCiudades;
+	}
 
 	/*---------------------------- DEVOLVER CAMINO---------------------------- */
 	public ListaGenerica<String> devolverCamino(String ciudad1, String ciudad2) {
@@ -68,7 +72,8 @@ public class Mapa {
 		ListaGenerica<Vertice<String>> listaVertices = this.mapaCiudades.listaDeVertices();
 		boolean okCiudad1 = false;
 		int i = -1; // Posicion de ciudad1
-		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
+		listaVertices.comenzar();
+		while (!(listaVertices.fin()) && !(okCiudad1)) { // Mientras no encuentre ciudad1 y no se termine la lista
 			Vertice<String> v = listaVertices.proximo();
 			if (v.dato() == ciudad1) {
 				okCiudad1 = true;
@@ -77,7 +82,7 @@ public class Mapa {
 			}
 		}
 		// Encontre ciudad1? --> Recorro para encontrar ciudad2 (Camino)
-		if (i != -1) {
+		if (okCiudad1) {
 			devolverCaminoExceptuando(i, marca, lista, camino, ciudad2, ciudades);
 		}
 		return camino;
@@ -102,7 +107,7 @@ public class Mapa {
 					devolverCaminoExceptuando(j, marca, lista, camino, ciudad2, ciudades);
 					// Si existe camino, en este punto ya va a estar copiado en camino, entonces
 					// puedo borrar
-					// Esto borra toda la lista cuando haga backtracking.
+					// Esto borra toda la lista cuando haga backtracking. Sino, busca camino alternativo
 					lista.eliminarEn(lista.tamanio());
 				}
 			}
@@ -115,9 +120,10 @@ public class Mapa {
 		// Hago mi vector de marcas para saber si ya visite o no un vertice
 		boolean[] marca = new boolean[this.mapaCiudades.listaDeVertices().tamanio()];
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
-		Integer minDistancia = 99999; // Wrapper para poder modificarlo en el recursivo
+		Integer minDistancia = 99999; // Hay qye hacer un objecto para referencia
 		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
 		ListaGenerica<Vertice<String>> listaVertices = this.mapaCiudades.listaDeVertices();
+		listaVertices.comenzar();
 		boolean okCiudad1 = false;
 		int i = -1; // Posicion de ciudad1
 		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
@@ -173,6 +179,7 @@ public class Mapa {
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
 		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
 		ListaGenerica<Vertice<String>> listaVertices = this.mapaCiudades.listaDeVertices();
+		listaVertices.comenzar();
 		boolean okCiudad1 = false;
 		int i = -1; // Posicion de ciudad1
 		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
@@ -222,7 +229,7 @@ public class Mapa {
 	
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
 	public ListaGenerica<String> caminoMenorCarga(String ciudad1, String ciudad2, int tanqueAuto) {
-		Integer min = 99999;
+		Integer min = 99999; //HACER OBJETO
 		boolean[] marca = new boolean[mapaCiudades.listaDeVertices().tamanio() + 1];
 		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
@@ -291,6 +298,7 @@ public class Mapa {
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
 	//Hay que verificar todos los metodos con un programa principal
 
+	//Clonar lista esta mal??
 	private void clonarLista(ListaGenerica<String> lis, ListaGenerica<String> camino) {
 		lis.comenzar();
 		while (!lis.fin()) {
