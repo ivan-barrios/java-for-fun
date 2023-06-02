@@ -5,8 +5,8 @@ import prog3.listagenerica.*;
 
 public class Mapa {
 	Grafo<String> mapaCiudades;
-	
-	public Mapa (Grafo<String> mapaCiudades) {
+
+	public Mapa(Grafo<String> mapaCiudades) {
 		this.mapaCiudades = mapaCiudades;
 	}
 
@@ -107,7 +107,8 @@ public class Mapa {
 					devolverCaminoExceptuando(j, marca, lista, camino, ciudad2, ciudades);
 					// Si existe camino, en este punto ya va a estar copiado en camino, entonces
 					// puedo borrar
-					// Esto borra toda la lista cuando haga backtracking. Sino, busca camino alternativo
+					// Esto borra toda la lista cuando haga backtracking. Sino, busca camino
+					// alternativo
 					lista.eliminarEn(lista.tamanio());
 				}
 			}
@@ -119,52 +120,45 @@ public class Mapa {
 	public ListaGenerica<String> caminoMasCorto(String ciudad1, String ciudad2) {
 		// Hago mi vector de marcas para saber si ya visite o no un vertice
 		boolean[] marca = new boolean[this.mapaCiudades.listaDeVertices().tamanio()];
-		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
-		Integer minDistancia = 99999; // Hay qye hacer un objecto para referencia
 		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
+		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
+		MinimaDistancia min = new MinimaDistancia(99999); // Objeto que contiene minimo
 		ListaGenerica<Vertice<String>> listaVertices = this.mapaCiudades.listaDeVertices();
 		listaVertices.comenzar();
 		boolean okCiudad1 = false;
 		int i = -1; // Posicion de ciudad1
 		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
 			Vertice<String> v = listaVertices.proximo();
-			if (v.dato() == ciudad1) {
+			if (v.dato().equals(ciudad1)) {
 				okCiudad1 = true;
 				i = v.posicion();
-				lista.agregarFinal(v.dato()); // Agrego como primer dato de lista ciudad1
 			}
 		}
 		// Encontre ciudad1? --> Recorro para encontrar ciudad2 (Camino)
 		if (i != -1) {
-			int distancia = 0;
-			caminoMasCorto(i, marca, lista, camino, ciudad2, minDistancia, distancia);
+			caminoMasCorto(i, marca, lista, camino, ciudad2);
 		}
 		return camino;
 	}
 
 	private void caminoMasCorto(int i, boolean[] marca, ListaGenerica<String> lista, ListaGenerica<String> camino,
-			String ciudad2, Integer minDistancia, int distancia) {
+			String ciudad2) {
 		marca[i] = true; // Pongo la marca en el vector
 		Vertice<String> v = this.mapaCiudades.listaDeVertices().elemento(i); // Agarro vertice actual
 		lista.agregarFinal(v.dato());
-		if (v.dato() == ciudad2) {
-			if (distancia < minDistancia) {
+		if (v.dato().equals(ciudad2)) {
+			if ((lista.tamanio() < camino.tamanio()) || camino.tamanio() == 0) {
 				clonarLista(lista, camino);
-				minDistancia = distancia; // Actualizo minDistancia
-				marca[i] = false; // Puede que vuelva en algun momento
 			}
 		} else {
 			ListaGenerica<Arista<String>> adyacentes = this.mapaCiudades.listaDeAdyacentes(v); // Agarro los adyacentes
 																								// a mi vertice actual
-			adyacentes.comenzar(); // Para recorrerlo
+			adyacentes.comenzar();
 			while (!adyacentes.fin()) {
-				Arista<String> arista = adyacentes.proximo();
-				int j = arista.verticeDestino().posicion();
+				int j = adyacentes.proximo().verticeDestino().posicion();
 				if (!marca[j]) {
-					distancia += arista.peso();
-					caminoMasCorto(j, marca, lista, camino, ciudad2, minDistancia, distancia);
-					lista.eliminarEn(lista.tamanio());
-					distancia -= arista.peso();
+					caminoMasCorto(j, marca, lista, camino, ciudad2);
+					lista.eliminarEn(lista.tamanio() - 1);
 					marca[j] = false; // Desmarco porque puede haber un camino mas corto que pase por aca
 				}
 			}
@@ -184,10 +178,9 @@ public class Mapa {
 		int i = -1; // Posicion de ciudad1
 		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
 			Vertice<String> v = listaVertices.proximo();
-			if (v.dato() == ciudad1) {
+			if (v.dato().equals(ciudad1)) {
 				okCiudad1 = true;
 				i = v.posicion();
-				lista.agregarFinal(v.dato()); // Agrego como primer dato de lista ciudad1
 			}
 		}
 		// Encontre ciudad1? --> Recorro para encontrar ciudad2 (Camino)
@@ -202,34 +195,34 @@ public class Mapa {
 		marca[i] = true; // Pongo la marca en el vector
 		Vertice<String> v = this.mapaCiudades.listaDeVertices().elemento(i); // Agarro vertice actual
 		lista.agregarFinal(v.dato());
-		if (v.dato() == ciudad2) {
-			clonarLista(lista, camino);
+		if (v.dato().equals(ciudad2)) {
+			System.out.println("das");
+			if (tanqueAuto > 0) {
+				clonarLista(lista, camino);
+			}
 		}
-		if (!camino.esVacia()) {
+		else {
 			ListaGenerica<Arista<String>> adyacentes = this.mapaCiudades.listaDeAdyacentes(v);
 			adyacentes.comenzar(); // Para recorrerlo
 			while (!adyacentes.fin()) {
 				Arista<String> arista = adyacentes.proximo();
 				int j = arista.verticeDestino().posicion();
 				if (!marca[j]) {
-					tanqueAuto -= arista.peso();
-					if (tanqueAuto - arista.peso() > 0) {
+					if ((tanqueAuto - arista.peso()) > 0) {
 						// Si agrego en esta linea o agrego al principio de la funcion es lo mismo no?
-						caminoSinCargar(j, marca, lista, camino, ciudad2, tanqueAuto);
-						lista.eliminarEn(lista.tamanio());
+						caminoSinCargar(j, marca, lista, camino, ciudad2, tanqueAuto - arista.peso());
+						lista.eliminarEn(lista.tamanio() - 1);
+						marca[i] = false;
 					}
-					tanqueAuto += arista.peso();
 				}
 			}
 		}
 	}
 	/*---------------------------- DEVOLVER CAMINO SIN CARGAR---------------------------- */
 
-	
-	
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
 	public ListaGenerica<String> caminoMenorCarga(String ciudad1, String ciudad2, int tanqueAuto) {
-		Integer min = 99999; //HACER OBJETO
+		Integer min = 99999; // HACER OBJETO
 		boolean[] marca = new boolean[mapaCiudades.listaDeVertices().tamanio() + 1];
 		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
@@ -274,7 +267,7 @@ public class Mapa {
 				int j = arista.verticeDestino().posicion();
 				if (!marca[j]) {
 					boolean cargo = false;
-					if (tanqueAuto < arista.peso()) { //Cargo si es necesario
+					if (tanqueAuto < arista.peso()) { // Cargo si es necesario
 						cargo = true;
 						tanqueAuto += carga - tanqueAuto;
 						cantParadas++;
@@ -286,7 +279,8 @@ public class Mapa {
 						lista.eliminarEn(lista.tamanio());
 					}
 					tanqueAuto += arista.peso();
-					if (cargo) { //Si cargó y ya procesó, descargo lo que cargó para seguir mirando otros caminos
+					if (cargo) { // Si cargó y ya procesó, descargo lo que cargó para seguir mirando otros
+									// caminos
 						tanqueAuto -= arista.peso();
 						cantParadas--;
 					}
@@ -296,14 +290,13 @@ public class Mapa {
 
 	}
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
-	//Hay que verificar todos los metodos con un programa principal
 
-	//Clonar lista esta mal??
 	private void clonarLista(ListaGenerica<String> lis, ListaGenerica<String> camino) {
+		while (!camino.esVacia())
+			camino.eliminarEn(0);
 		lis.comenzar();
-		while (!lis.fin()) {
+		while (!lis.fin())
 			camino.agregarFinal(lis.proximo());
-		}
 	}
 
 }
