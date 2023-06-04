@@ -169,125 +169,108 @@ public class Mapa {
 	/*---------------------------- DEVOLVER CAMINO SIN CARGAR---------------------------- */
 	// Supongo que tengo la cantidad de nafta en el peso del arista, no?
 	public ListaGenerica<String> caminoSinCargar(String ciudad1, String ciudad2, int tanqueAuto) {
-		boolean[] marca = new boolean[this.mapaCiudades.listaDeVertices().tamanio()];
+		Vertice<String> vInicial = null;
+		Vertice<String> vFinal = null;
+		boolean[] visitados = new boolean[mapaCiudades.listaDeVertices().tamanio()];
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
-		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
-		ListaGenerica<Vertice<String>> listaVertices = this.mapaCiudades.listaDeVertices();
-		listaVertices.comenzar();
-		boolean okCiudad1 = false;
-		int i = -1; // Posicion de ciudad1
-		while (!listaVertices.fin() && !okCiudad1) { // Mientras no encuentre ciudad1 y no se termine la lista
-			Vertice<String> v = listaVertices.proximo();
-			if (v.dato().equals(ciudad1)) {
-				okCiudad1 = true;
-				i = v.posicion();
+		if ((mapaCiudades != null) && (!mapaCiudades.esVacio())) {
+			ListaGenerica<Vertice<String>> vertices = this.mapaCiudades.listaDeVertices();
+			vertices.comenzar();
+			while (!vertices.fin()) {
+				Vertice<String> vAux = vertices.proximo();
+				if (vAux.dato().equals(ciudad1)) {
+					vInicial = vAux;
+				}
+				if (vAux.dato().equals(ciudad2)) {
+					vFinal = vAux;
+				}
 			}
-		}
-		// Encontre ciudad1? --> Recorro para encontrar ciudad2 (Camino)
-		if (i != -1) {
-			caminoSinCargar(i, marca, lista, camino, ciudad2, tanqueAuto);
+			ListaGenerica<String> caminoActual = new ListaGenericaEnlazada<String>();
+			if ((vInicial != null) && (vFinal != null))
+				caminoSinCargar(vInicial, vFinal, caminoActual, camino, visitados, tanqueAuto);
 		}
 		return camino;
 	}
 
-	private void caminoSinCargar(int i, boolean[] marca, ListaGenerica<String> lista, ListaGenerica<String> camino,
-			String ciudad2, int tanqueAuto) {
-		marca[i] = true; // Pongo la marca en el vector
-		Vertice<String> v = this.mapaCiudades.listaDeVertices().elemento(i); // Agarro vertice actual
-		lista.agregarFinal(v.dato());
-		if (v.dato().equals(ciudad2)) {
-			System.out.println("das");
-			if (tanqueAuto > 0) {
-				clonarLista(lista, camino);
+	private void caminoSinCargar(Vertice<String> vAct, Vertice<String> vFin, ListaGenerica<String> caminoActual,
+			ListaGenerica<String> camino, boolean[] visitados, int tanqueAuto) {
+		caminoActual.agregarFinal(vAct.dato());
+		visitados[vAct.posicion()] = true;
+		if ((vAct == vFin) && (tanqueAuto > 0)) {
+			if (camino.esVacia() || (camino.tamanio() > caminoActual.tamanio())) {
+				clonarLista(caminoActual, camino);
 			}
-		}
-		else {
-			ListaGenerica<Arista<String>> adyacentes = this.mapaCiudades.listaDeAdyacentes(v);
-			adyacentes.comenzar(); // Para recorrerlo
-			while (!adyacentes.fin()) {
-				Arista<String> arista = adyacentes.proximo();
-				int j = arista.verticeDestino().posicion();
-				if (!marca[j]) {
-					if ((tanqueAuto - arista.peso()) > 0) {
-						// Si agrego en esta linea o agrego al principio de la funcion es lo mismo no?
-						caminoSinCargar(j, marca, lista, camino, ciudad2, tanqueAuto - arista.peso());
-						lista.eliminarEn(lista.tamanio() - 1);
-						marca[i] = false;
-					}
+		} else {
+			ListaGenerica<Arista<String>> listaAdy = mapaCiudades.listaDeAdyacentes(vAct);
+			listaAdy.comenzar();
+			while (!listaAdy.fin()) {
+				Arista<String> arista = listaAdy.proximo();
+				Vertice<String> vAux = arista.verticeDestino();
+
+				if (!visitados[vAux.posicion()]) {
+					caminoSinCargar(vAux, vFin, caminoActual, camino, visitados, tanqueAuto - arista.peso());
 				}
 			}
 		}
+		caminoActual.eliminarEn(caminoActual.tamanio() - 1);
+		visitados[vAct.posicion()] = false;
 	}
 	/*---------------------------- DEVOLVER CAMINO SIN CARGAR---------------------------- */
 
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
 	public ListaGenerica<String> caminoMenorCarga(String ciudad1, String ciudad2, int tanqueAuto) {
-		Integer min = 99999; // HACER OBJETO
-		boolean[] marca = new boolean[mapaCiudades.listaDeVertices().tamanio() + 1];
-		ListaGenerica<String> lista = new ListaGenericaEnlazada<String>();
+		Vertice<String> vInicial = null;
+		Vertice<String> vFinal = null;
+		boolean[] visitados = new boolean[mapaCiudades.listaDeVertices().tamanio()];
 		ListaGenerica<String> camino = new ListaGenericaEnlazada<String>();
-		if (tanqueAuto != 0) {
-			ListaGenerica<Vertice<String>> listaVertices = mapaCiudades.listaDeVertices();
-			listaVertices.comenzar();
-			Vertice<String> v;
-			boolean ok = false;
-			int i = -1;
-			while ((!listaVertices.fin()) && (!ok)) {
-				v = listaVertices.proximo();
-				if (v.dato() == ciudad1) {
-					ok = true;
-					i = v.posicion();
-					lista.agregarFinal(v.dato());
+		if ((mapaCiudades != null) && (!mapaCiudades.esVacio())) {
+			ListaGenerica<Vertice<String>> vertices = this.mapaCiudades.listaDeVertices();
+			vertices.comenzar();
+			while (!vertices.fin()) {
+				Vertice<String> vAux = vertices.proximo();
+				if (vAux.dato().equals(ciudad1)) {
+					vInicial = vAux;
+				}
+				if (vAux.dato().equals(ciudad2)) {
+					vFinal = vAux;
 				}
 			}
-			if (i != -1) {
-				int carga = tanqueAuto;
-				int cantParadas = 0;
-				caminoMenorCarga(i, lista, camino, marca, ciudad2, tanqueAuto, carga, cantParadas, min);
+			ListaGenerica<String> caminoActual = new ListaGenericaEnlazada<String>();
+			if (vInicial != null && vFinal != null) {
+				caminoMenorCarga(vInicial, vFinal, caminoActual, camino, visitados, tanqueAuto, tanqueAuto, 0, 0);
 			}
 		}
 		return camino;
-
 	}
 
-	private void caminoMenorCarga(int i, ListaGenerica<String> lista, ListaGenerica<String> camino, boolean[] marca,
-			String ciudad2, int tanqueAuto, int carga, int cantParadas, Integer min) {
-		Vertice<String> v = mapaCiudades.listaDeVertices().elemento(i);
-		if (v.dato() == ciudad2) {
-			if (cantParadas < min) {
-				clonarLista(lista, camino);
-				min = cantParadas;
+	private void caminoMenorCarga(Vertice<String> vAct, Vertice<String> vFinal, ListaGenerica<String> caminoActual,
+			ListaGenerica<String> camino, boolean[] visitados, int tanque, int combustible, int carga,
+			int cargaActual) {
+		caminoActual.agregarFinal(vAct.dato());
+		visitados[vAct.posicion()] = true;
+		if ((vAct == vFinal) && (combustible > 0)) {
+			if (camino.esVacia() || carga > cargaActual) {
+				clonarLista(caminoActual, camino);
+				carga = cargaActual;
 			}
 		} else {
-			marca[i] = true;
-			ListaGenerica<Arista<String>> ady = mapaCiudades.listaDeAdyacentes(v);
-			ady.comenzar();
-			while (!ady.fin()) {
-				Arista<String> arista = ady.proximo();
-				int j = arista.verticeDestino().posicion();
-				if (!marca[j]) {
-					boolean cargo = false;
-					if (tanqueAuto < arista.peso()) { // Cargo si es necesario
-						cargo = true;
-						tanqueAuto += carga - tanqueAuto;
-						cantParadas++;
+			ListaGenerica<Arista<String>> listaAdy = mapaCiudades.listaDeAdyacentes(vAct);
+			listaAdy.comenzar();
+			while (!listaAdy.fin()) {
+				Arista<String> arista = listaAdy.proximo();
+				Vertice<String> vAux = arista.verticeDestino();
+				if (!visitados[vAux.posicion()]) {
+					if ((combustible - arista.peso()) < 0) {
+						cargaActual++;
+						combustible = tanque; // Lleno tanque
 					}
-					tanqueAuto -= arista.peso();
-					if (tanqueAuto >= 0) {
-						lista.agregarFinal(arista.verticeDestino().dato());
-						caminoMenorCarga(j, lista, camino, marca, ciudad2, tanqueAuto, carga, cantParadas, min);
-						lista.eliminarEn(lista.tamanio());
-					}
-					tanqueAuto += arista.peso();
-					if (cargo) { // Si cargó y ya procesó, descargo lo que cargó para seguir mirando otros
-									// caminos
-						tanqueAuto -= arista.peso();
-						cantParadas--;
-					}
+					caminoMenorCarga(vAux, vFinal, caminoActual, camino, visitados, tanque, combustible - arista.peso(),
+							carga, cargaActual);
 				}
 			}
 		}
-
+		caminoActual.eliminarEn(caminoActual.tamanio() - 1);
+		visitados[vAct.posicion()] = false;
 	}
 	/*---------------------------- DEVOLVER CAMINO CON MENOR CARGA---------------------------- */
 
